@@ -1,0 +1,33 @@
+services:
+  app:
+    container_name: template-service
+    image: example.com/template-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - gcs
+
+  gcs:
+    container_name: fake-gcs-server
+    image: fsouza/fake-gcs-server
+    ports:
+      - "4443:4443"
+    entrypoint: [ "/bin/sh", "-c" ]
+    # To persist bucket with their content consider mounting a volume
+    volumes:
+     - ./buckets:/data
+    # Define bucket 'sample-bucket' with 'some_file.txt' that will be available after container startup
+    # In order to define buckets that will be available after container startup consider to:
+    # - create desired bucket under /data folder;
+    # - create object under /data/{bucketName} bucket with desired content
+    command:
+      - |
+        # Creating 'sample-bucket' under /data folder
+        mkdir -p /data/sample-bucket
+        
+        # Creating 'some_file.txt' object under /data/sample-bucket bucket
+        # with content 'Some amazing content to be loaded'
+        echo "Some amazing content to be loaded" > /data/sample-bucket/some_file.txt
+        
+        # Bootstrap fake-gcs-server with http scheme and declared buckets
+        exec /bin/fake-gcs-server -scheme http -data /data

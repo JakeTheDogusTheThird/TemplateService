@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: template-service
+  cloud:
+    gcp:
+      storage:
+        enabled: false
+server:
+  error:
+    include-message: on_param
