@@ -28,6 +28,6 @@ services:
         # Creating 'some_file.txt' object under /data/sample-bucket bucket
         # with content 'Some amazing content to be loaded'
         echo "Some amazing content to be loaded" > /data/sample-bucket/some_file.txt
-        
+        echo "Some amazing content to be loaded" > /data/sample-bucket/some_file1.txt
         # Bootstrap fake-gcs-server with http scheme and declared buckets
         exec /bin/fake-gcs-server -scheme http -data /data
