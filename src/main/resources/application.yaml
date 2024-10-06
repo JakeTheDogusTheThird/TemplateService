@@ -8,3 +8,7 @@ spring:
 server:
   error:
     include-message: on_param
+
+storage:
+  host: http://localhost:4443
+  bucket: sample-bucket
